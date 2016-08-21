@@ -3,6 +3,7 @@ import { Router } from 'express';
 import * as Loc from './controllers/loc_controller';
 import * as Bio from './controllers/bio_controller';
 import * as User from './controllers/user_controller';
+import * as Intent from './controllers/intent_controller';
 import { requireAuth, requireSignin } from './services/passport';
 
 // init Router
@@ -17,7 +18,7 @@ router.get('/', (req, res) => {
 
 router.route('/locs')
   .post(requireAuth, Loc.createLoc)          // add new loc
-  .post(Loc.createLoc)                       // add new loc
+  .post(Loc.createLoc)                       // add new loc     ---> remove one
   .get(Loc.getLocs);                         // get all locs
 
 router.route('/locs/closest')                // for bot -> resp to user loc
@@ -48,5 +49,16 @@ router.route('/bios/:id')
 
 router.post('/signin', requireSignin, User.signin);
 router.post('/signup', User.signup);
+
+
+// intent
+
+router.route('/intent')
+  .post(Intent.createIntent)                       // add new query-resp pair
+  .put(Intent.getAnswer);                          // get intent reply
+
+router.route('/intent/data')
+  .get(Intent.getData);
+
 
 export default router;

@@ -39,9 +39,14 @@ Note that all endpoints are prefixed with `/api`, i.e. it is `http://dartmouthbo
 - **[ FOR BOT ]** PUT `/api/locs/closest` with fields `{ lat: '', lon: '' }` (corresponding to the latitude and longitude user has sent through facebook) returns location object (i.e. `{ title: '', gps: { lat: '' , long: '' }, content:'' }`) of the location closest to user's coordinates.
 - **[ ANALYTICS ]** GET `/api/locs/data` returns `[ {title: '', hits: '' }, ...]` array with entries corresponding to each location stored (where `hits` is a Number corresponding to the number of times a user has been registered as 'closest' to that specific location - as defined by the PUT method above - this is a reasonable proxy for popularity of locations / most visited locations).
 
-### (Intent? Q&A? Something clever)
-- POST '....' with fields `{ intent: '', answer: '' }`
-- GET '....' returns frequency of particular intent in questions
+### Intent
+- POST `/api/intent` with fields `{ query: '', response: '' }`, where `query` represents the 'intent' of the content, and `response` represents our desired content corresponding to said query.
+- **[ FOR BOT ]** PUT `/api/intent` with fields `{ query: '' }` returns the intent object (i.e. `{ query: '', response: '', hits: '' }` ) with `query` field corresponding to the query passed in.
+
+
+> An aside: the reader may wonder why we chose to perform a `PUT` request for the above operation, when a `GET` may intuitively seem more appropriate. The reason here is that this query will be performed by a facebook messenger bot. We desired that the bot be independent of url parameter requirements (hence meaning that it wouldn't store, say, anything accessible through `req.params.id` - therefore, we'd require some other sort of identifier to select what information to pull out of the database and return to the bot. Supplying such additional information would need to be done through the body of the HTTP request - something not desirable when dealing with `GET` requests. Therefore, a payload-compliant verb was necessary, and I chose `PUT` ;)
+
+- **[ ANALYTICS ]** GET `/api/intent/data` returns `[ { query: '', hits: '' }, ...]` array with entries corresponding to each intent object stored (where `hits` is a Number corresponding to the frequency with which said intent has been queried by the bot. This is, again, a reasonable barometer of popularity of queries).
 
 ### Survey Feedback
 - POST '....' unclear
