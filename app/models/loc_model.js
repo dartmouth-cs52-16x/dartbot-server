@@ -5,6 +5,7 @@ const LocSchema = new Schema({
   title: String,
   gps: { lat: String, long: String },
   content: String,
+  hits: Number,
 });
 
 // mapping from _id to id
