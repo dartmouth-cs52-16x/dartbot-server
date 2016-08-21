@@ -6,7 +6,7 @@ const BioSchema = new Schema({
   major: String,
   year: String,
   content: String,
-  image: Object,
+  image: String,
 });
 
 // mapping from _id to id

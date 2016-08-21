@@ -25,13 +25,11 @@ router.route('/locs/:id')
   .delete(requireAuth, Loc.deleteLoc);       // delete single loc
 
 // bios
-
 router.route('/bios')
   .post(requireAuth, Bio.createBio)          // add new bio
   .get(Bio.getBios);                         // get all bios
 
-router.route('/images')
-  .post(Bio.getSignedRequest);          // get S3 signed request for new image
+router.post('/images', Bio.getSignedRequest); // get S3 signed request for new image
 
 router.route('/bios/:id')
   .put(requireAuth, Bio.updateBio)           // edit existing bio
