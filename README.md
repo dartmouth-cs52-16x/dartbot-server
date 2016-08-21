@@ -31,37 +31,13 @@ Note that all endpoints are prefixed with `/api`, i.e. it is `http://dartmouthbo
 
 #### Location 
 
-- GET `/api/locs` returns gps (lat, long) and content for all locations
-
-example return: 
-
-```javascript
-// original query: http://dartmouthbot.herokuapp.com/api/locs
-[
-  {
-    "_id": "57b24937a708162200b52f66",
-    "content": "kemeny hall",
-    "gps": {
-      "lat": "35.364",
-      "long": "24.3423"
-    },
-    "id": "57b24937a708162200b52f66"
-  },
-  {
-    "_id": "57b24f01a708162200b52f67",
-    "content": "dartmouth hall is the best hall to known to man",
-    "gps": {
-      "lat": "3234.4444",
-      "long": "24.3423"
-    },
-    "id": "57b24f01a708162200b52f67"
-  }
-]
-```
-- POST `/api/locs` with fields `{ gps: { lat: '' , long: '' }, content:'' }` creates a new location (w/ gps and content). 
-- GET `/api/locs/:id` with field `{ id: '' }` returns gps (lat, long) for a specific location
+- GET `/api/locs` returns full objects for all locations
+- POST `/api/locs` with fields `{ title: '', gps: { lat: '' , long: '' }, content:'' }` creates a new location (w/ gps, title, and content). 
+- GET `/api/locs/:id` with field `{ id: '' }` returns full object for a specific location
 - PUT `/api/locs/:id` with field `{ id: '' }` edits an existing location with the passed in `id`
 - DELETE `/api/locs/:id` with field `{ id: '' }` deletes an existing location with the passed in `id`
+- **[ FOR BOT ]** PUT `/api/locs/closest` with fields `{ lat: '', lon: '' }` (corresponding to the latitude and longitude user has sent through facebook) returns location object (i.e. `{ title: '', gps: { lat: '' , long: '' }, content:'' }`) of the location closest to user's coordinates.
+- **[ ANALYTICS ]** GET `/api/locs/data` returns `[ {title: '', hits: '' }, ...]` array with entries corresponding to each location stored (where `hits` is a Number corresponding to the number of times a user has been registered as 'closest' to that specific location - as defined by the PUT method above - this is a reasonable proxy for popularity of locations / most visited locations).
 
 #### Bio 
 
@@ -78,12 +54,5 @@ example return:
 
 ## Authors
 
-Ahsan Azim, Alma Wang
-
-
-# TODO 
-***
-
-- thoroughly test w/ actual frontend (rudimentary testing already done via other means)
-- setup S3 for image storage
+Ahsan Azim, Alma Wang, Ian Bateman, Larissa Chen, Robin Jayaswal 
 
