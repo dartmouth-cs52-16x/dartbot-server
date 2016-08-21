@@ -17,12 +17,20 @@ router.get('/', (req, res) => {
 
 router.route('/locs')
   .post(requireAuth, Loc.createLoc)          // add new loc
+  .post(Loc.createLoc)                       // add new loc
   .get(Loc.getLocs);                         // get all locs
+
+router.route('/locs/closest')                // for bot -> resp to user loc
+  .put(Loc.getClosest);
+
+router.route('/locs/data')                   // for web/app -> analytics page
+  .get(Loc.getData);
 
 router.route('/locs/:id')
   .put(requireAuth, Loc.updateLoc)           // edit existing loc
   .get(Loc.getLoc)                           // get single loc
   .delete(requireAuth, Loc.deleteLoc);       // delete single loc
+
 
 // bios
 router.route('/bios')
@@ -36,7 +44,7 @@ router.route('/bios/:id')
   .get(Bio.getBio)                           // get single bio
   .delete(requireAuth, Bio.deleteBio);       // delete single bio
 
-// login?
+// login
 
 router.post('/signin', requireSignin, User.signin);
 router.post('/signup', User.signup);
