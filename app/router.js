@@ -17,8 +17,7 @@ router.get('/', (req, res) => {
 // locations
 
 router.route('/locs')
-  // .post(requireAuth, Loc.createLoc)       // add new loc
-  .post(Loc.createLoc)                       // add new loc
+  .post(requireAuth, Loc.createLoc)       // add new loc
   .get(Loc.getLocs);                         // get all locs
 
 router.route('/locs/closest')                // for bot -> resp to user loc
@@ -30,8 +29,7 @@ router.route('/locs/data')                   // for web/app -> analytics page
 router.route('/locs/:id')
   .put(requireAuth, Loc.updateLoc)           // edit existing loc
   .get(Loc.getLoc)                           // get single loc
-  // .delete(requireAuth, Loc.deleteLoc);    // delete single loc
-  .delete(Loc.deleteLoc);                    // no auth for now
+  .delete(requireAuth, Loc.deleteLoc);    // delete single loc
 
 
 // bios
