@@ -17,13 +17,14 @@ export const createBio = (req, res) => {
   bio.content = req.body.content;
   bio.save()
   .then(result => {
-    bio.image = `https://${s3Bucket}.s3.amazonaws.com/${result._id}`;
-    bio.save().then((resultWithImage) => {
-      res.json(bio);
-    })
-    . catch(error => {
-      res.json({ error });
-    });
+    res.json(result);
+    // bio.image = `https://${s3Bucket}.s3.amazonaws.com/${result._id}`;
+    // bio.save().then((resultWithImage) => {
+    //   res.json(bio);
+    // })
+    // . catch(error => {
+    //   res.json({ error });
+    // });
   })
   .catch(error => {
     res.json({ error });
@@ -103,7 +104,16 @@ export const getSignedRequest = (req, res) => {
         requestUrl: data,
         imageUrl: `https://${s3Params.Bucket}.s3.amazonaws.com/${s3Params.id}`,
       };
-      res.json(returnData);
+      Bio.findById(req.body.id)
+      .then(bio => {
+        bio.image = `https://${s3Params.Bucket}.s3.amazonaws.com/${s3Params._id}`;
+        bio.save().then((resultWithImage) => {
+          res.json(returnData);
+        })
+        . catch(error => {
+          res.json({ error });
+        });
+      });
     }
   });
 };
