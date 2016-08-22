@@ -20,7 +20,7 @@ router.route('/locs')
   .post(requireAuth, Loc.createLoc)       // add new loc
   .get(Loc.getLocs);                         // get all locs
 
-router.route('/locs/closest')                // for bot -> resp to user loc
+router.route('/data/closest')                // for bot -> resp to user loc
   .put(Loc.getClosest);
 
 router.route('/locs/data')                   // for web/app -> analytics page
