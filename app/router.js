@@ -57,6 +57,9 @@ router.route('/intent')
   .post(Intent.createIntent)                       // add new query-resp pair
   .put(Intent.getAnswer);                          // get intent reply
 
+router.route('/intent/edit')            // ---> NOT RESTFUL AT ALL (yet needs must :( )
+  .put(Intent.updateIntent);
+
 router.route('/intent/data')
   .get(Intent.getData);
 

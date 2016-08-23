@@ -49,6 +49,9 @@ Note that all endpoints are prefixed with `/api`, i.e. it is `http://dartmouthbo
 > An aside: the reader may wonder why we chose to perform a `PUT` request for the above operation, when a `GET` may intuitively seem more appropriate. The reason here is that this query will be performed by a facebook messenger bot. We desired that the bot be independent of url parameter requirements (hence meaning that it wouldn't store, say, anything accessible through `req.params.id` - therefore, we'd require some other sort of identifier to select what information to pull out of the database and return to the bot. Supplying such additional information would need to be done through the body of the HTTP request - something not desirable when dealing with `GET` requests. Therefore, a payload-compliant verb was necessary, and I chose `PUT` ;)
 
 - **[ ANALYTICS ]** GET `/api/intent/data` returns `[ { query: '', hits: '' }, ...]` array with entries corresponding to each intent object stored (where `hits` is a Number corresponding to the frequency with which said intent has been queried by the bot. This is, again, a reasonable barometer of popularity of queries).
+- PUT `/api/intent/edit` with fields `{ "query": "", "response": "" }` updates the `response` field of the intent object with `query` field corresponding to the query passed in.
+
+> That last PUT was not REST-ful at all, yet needs must :(
 
 
 #### Bio
