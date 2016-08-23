@@ -19,15 +19,18 @@ export const updateIntent = (req, res) => {
     (err, docs) => {
       if (err) {
         res.send(err);
+      } else if (docs !== null) {
+        const oldNumHits = (docs !== null) ? docs.hits : 0;
+        Intent.update({ query: req.body.query }, { query: req.body.query, response: req.body.response, hits: oldNumHits }, { upsert: true },
+            (err, raw) => {
+              if (err) {
+                res.send(err);
+              }
+              res.json({ message: 'Intent updated / created !' });
+            });
+      } else {
+        res.json({ message: 'something went wrong' });
       }
-      const oldNumHits = (docs !== null) ? docs.hits : 0;
-      Intent.update({ query: req.body.query }, { query: req.body.query, response: req.body.response, hits: oldNumHits }, { upsert: true },
-          (err, raw) => {
-            if (err) {
-              res.send(err);
-            }
-            res.json({ message: 'Intent updated / created !' });
-          });
     });
 };
 
@@ -36,9 +39,12 @@ export const getAnswer = (req, res) => {
     (err, docs) => {
       if (err) {
         res.send(err);
+      } else if (docs !== null) {
+        incrmntHits(docs.id, docs.hits);
+        res.json(docs);
+      } else {
+        res.json({ message: 'that query doesn\'t exist' });
       }
-      incrmntHits(docs.id, docs.hits);
-      res.json(docs);
     });
 };
 
