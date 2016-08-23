@@ -77,7 +77,13 @@ export const updateBio = (req, res) => {
 export const deleteBio = (req, res) => {
   Bio.findByIdAndRemove(req.params.id)
   .then(result => {
-    res.json(result);
+    Bio.find()
+    .then(bios => {
+      res.json(bios);
+    })
+    .catch(error => {
+      res.json({ error });
+    });
   })
   .catch(error => {
     res.json({ error });
