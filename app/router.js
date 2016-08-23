@@ -4,6 +4,7 @@ import * as Loc from './controllers/loc_controller';
 import * as Bio from './controllers/bio_controller';
 import * as User from './controllers/user_controller';
 import * as Intent from './controllers/intent_controller';
+import * as Survey from './controllers/survey_controller';
 import { requireAuth, requireSignin } from './services/passport';
 
 // init Router
@@ -58,6 +59,14 @@ router.route('/intent')
 
 router.route('/intent/data')
   .get(Intent.getData);
+
+
+// survey
+
+router.route('/survey')
+  .get(Survey.getData)               // get question-response stats
+  .post(Survey.createSurvey)         // create question-response pair (with question only)
+  .put(Survey.updateRating);         // calc new meanResponse using payload
 
 
 export default router;
