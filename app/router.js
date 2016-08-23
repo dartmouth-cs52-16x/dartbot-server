@@ -54,11 +54,11 @@ router.post('/signup', User.signup);
 // intent
 
 router.route('/intent')
-  .post(Intent.createIntent)                       // add new query-resp pair
   .put(Intent.getAnswer);                          // get intent reply
+  // .post(Intent.createIntent)                       // add new query-resp pair   --> UNUSED NOW
 
 router.route('/intent/edit')            // ---> NOT RESTFUL AT ALL (yet needs must :( )
-  .put(Intent.updateIntent);
+  .put(Intent.updateIntent);            // updates query-resp pair if there, creates if not
 
 router.route('/intent/data')
   .get(Intent.getData);

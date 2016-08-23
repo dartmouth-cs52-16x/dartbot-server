@@ -1,18 +1,18 @@
 import Intent from '../models/intent_model';
 
-export const createIntent = (req, res) => {
-  const intent = new Intent();
-  intent.query = req.body.query;
-  intent.response = req.body.response;
-  intent.hits = 0;
-  intent.save()
-  .then(result => {
-    res.json({ message: 'Intent created!' });
-  })
-  .catch(error => {
-    res.json({ error });
-  });
-};
+// export const createIntent = (req, res) => {
+//   const intent = new Intent();
+//   intent.query = req.body.query;
+//   intent.response = req.body.response;
+//   intent.hits = 0;
+//   intent.save()
+//   .then(result => {
+//     res.json({ message: 'Intent created!' });
+//   })
+//   .catch(error => {
+//     res.json({ error });
+//   });
+// };
 
 export const updateIntent = (req, res) => {
   Intent.findOne({ query: req.body.query }, 'hits',
@@ -20,7 +20,8 @@ export const updateIntent = (req, res) => {
       if (err) {
         res.send(err);
       }
-      Intent.update({ query: req.body.query }, { query: req.body.query, response: req.body.response, hits: docs.hits }, { upsert: true },
+      const oldNumHits = (docs !== null) ? docs.hits : 0;
+      Intent.update({ query: req.body.query }, { query: req.body.query, response: req.body.response, hits: oldNumHits }, { upsert: true },
           (err, raw) => {
             if (err) {
               res.send(err);
