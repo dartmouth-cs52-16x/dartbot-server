@@ -42,16 +42,16 @@ Note that all endpoints are prefixed with `/api`, i.e. it is `http://dartmouthbo
 - **[ ANALYTICS ]** GET `/api/locs/data` returns `[ {title: '', hits: '' }, ...]` array with entries corresponding to each location stored (where `hits` is a Number corresponding to the number of times a user has been registered as 'closest' to that specific location - as defined by the PUT method above - this is a reasonable proxy for popularity of locations / most visited locations).   
 
 ### Intent
-- POST `/api/intent` with fields `{ query: '', response: '' }`, where `query` represents the 'intent' of the content, and `response` represents our desired content corresponding to said query.
+- PUT `/api/intent/edit` with fields `{ "query": "", "response": "" }` updates the `response` field of the intent object with `query` field corresponding to the query passed in. **If that query did not exist, it creates an Intent object with the corresponding query and response fields.**
+
+> That last PUT was not REST-ful at all, yet needs must :(
+
 - **[ FOR BOT ]** PUT `/api/intent` with fields `{ query: '' }` returns the intent object (i.e. `{ query: '', response: '', hits: '' }` ) with `query` field corresponding to the query passed in.
 
 
 > An aside: the reader may wonder why we chose to perform a `PUT` request for the above operation, when a `GET` may intuitively seem more appropriate. The reason here is that this query will be performed by a facebook messenger bot. We desired that the bot be independent of url parameter requirements (hence meaning that it wouldn't store, say, anything accessible through `req.params.id` - therefore, we'd require some other sort of identifier to select what information to pull out of the database and return to the bot. Supplying such additional information would need to be done through the body of the HTTP request - something not desirable when dealing with `GET` requests. Therefore, a payload-compliant verb was necessary, and I chose `PUT` ;)
 
 - **[ ANALYTICS ]** GET `/api/intent/data` returns `[ { query: '', hits: '' }, ...]` array with entries corresponding to each intent object stored (where `hits` is a Number corresponding to the frequency with which said intent has been queried by the bot. This is, again, a reasonable barometer of popularity of queries).
-- PUT `/api/intent/edit` with fields `{ "query": "", "response": "" }` updates the `response` field of the intent object with `query` field corresponding to the query passed in.
-
-> That last PUT was not REST-ful at all, yet needs must :(
 
 
 #### Bio
