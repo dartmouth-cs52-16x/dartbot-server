@@ -7,7 +7,7 @@ This repo contains the code for the API server backend portion of the project.
 
 ## Architecture
 
-Our code is organized into three main repos: the API backend, the DartBot Tour Guide frontend and the Facebook Messenger bot using botkit.
+Our code is organized into four main repos: the API backend, the DartBot Tour Guide frontend, the Facebook Messenger bot using botkit, and the iOS companion App.
 The API stores Loc (Location) of sites on the tour with the gps coordinates of the location and the content related to this location.
 The Profile schema (used in our bio page) stores the name and a description of each tour guide.
 
