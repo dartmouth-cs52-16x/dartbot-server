@@ -19,7 +19,7 @@ export const updateIntent = (req, res) => {
     (err, docs) => {
       if (err) {
         res.send(err);
-      } else if (docs !== null) {
+      } else {
         const oldNumHits = (docs !== null) ? docs.hits : 0;
         Intent.update({ query: req.body.query }, { query: req.body.query, response: req.body.response, hits: oldNumHits }, { upsert: true },
             (err, raw) => {
@@ -28,8 +28,6 @@ export const updateIntent = (req, res) => {
               }
               res.json({ message: 'Intent updated / created !' });
             });
-      } else {
-        res.json({ message: 'something went wrong' });
       }
     });
 };
@@ -40,6 +38,7 @@ export const getAnswer = (req, res) => {
       if (err) {
         res.send(err);
       } else if (docs !== null) {
+        console.log('doc is here');
         incrmntHits(docs.id, docs.hits);
         res.json(docs);
       } else {
