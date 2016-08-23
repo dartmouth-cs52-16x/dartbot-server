@@ -27,7 +27,7 @@ The project is deployed to heroku with the following app instance url:
 
 ## API Endpoints
 
-# take note of change from `/api/locs/data` to `/api/data/locs`
+# take note of change from `/api/locs/closest` to `/api/data/closest`
 
 Note that all endpoints are prefixed with `/api`, i.e. it is `http://dartmouthbot.herokuapp.com/api/locs` not `http://dartmouthbot.herokuapp.com/locs`
 
@@ -38,8 +38,8 @@ Note that all endpoints are prefixed with `/api`, i.e. it is `http://dartmouthbo
 - GET `/api/locs/:id` with field `{ id: '' }` returns full object for a specific location
 - PUT `/api/locs/:id` with field `{ id: '' }` edits an existing location with the passed in `id` (*we do not anticipate this command to be used*)
 - DELETE `/api/locs/:id` with field `{ id: '' }` deletes an existing location with the passed in `id`
-- **[ FOR BOT ]** PUT `/api/locs/closest` with fields `{ lat: '', lon: '' }` (corresponding to the latitude and longitude user has sent through facebook) returns location object (i.e. `{ title: '', gps: { lat: '' , long: '' }, content:'' }`) of the location closest to user's coordinates.
-- **[ ANALYTICS ]** GET `/api/data/locs` returns `[ {title: '', hits: '' }, ...]` array with entries corresponding to each location stored (where `hits` is a Number corresponding to the number of times a user has been registered as 'closest' to that specific location - as defined by the PUT method above - this is a reasonable proxy for popularity of locations / most visited locations).   
+- **[ FOR BOT ]** PUT `/api/data/closest` with fields `{ lat: '', lon: '' }` (corresponding to the latitude and longitude user has sent through facebook) returns location object (i.e. `{ title: '', gps: { lat: '' , long: '' }, content:'' }`) of the location closest to user's coordinates.
+- **[ ANALYTICS ]** GET `/api/locs/data` returns `[ {title: '', hits: '' }, ...]` array with entries corresponding to each location stored (where `hits` is a Number corresponding to the number of times a user has been registered as 'closest' to that specific location - as defined by the PUT method above - this is a reasonable proxy for popularity of locations / most visited locations).   
 
 ### Intent
 - POST `/api/intent` with fields `{ query: '', response: '' }`, where `query` represents the 'intent' of the content, and `response` represents our desired content corresponding to said query.
