@@ -112,7 +112,7 @@ export const getSignedRequest = (req, res) => {
       };
       Bio.findById(req.body.id)
       .then(bio => {
-        bio.image = `https://${s3Params.Bucket}.s3.amazonaws.com/${s3Params._id}`;
+        bio.image = `https://${s3Params.Bucket}.s3.amazonaws.com/${s3Params.id}`;
         bio.save().then((resultWithImage) => {
           res.json(returnData);
         })
