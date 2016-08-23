@@ -45,7 +45,7 @@ function incrmntHits(id, currHits) {
 }
 
 export const getData = (req, res) => {
-  Intent.find({}, '_id query hits',
+  Intent.find({}, '_id query response hits',
     (err, docs) => {
       if (err) {
         res.send(err);
