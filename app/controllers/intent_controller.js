@@ -15,13 +15,19 @@ export const createIntent = (req, res) => {
 };
 
 export const updateIntent = (req, res) => {
-  Intent.update({ query: req.body.query }, { query: req.body.query, response: req.body.response },
-      (err, raw) => {
-        if (err) {
-          res.send(err);
-        }
-        res.json({ message: 'Intent updated!' });
-      });
+  Intent.findOne({ query: req.body.query }, 'hits',
+    (err, docs) => {
+      if (err) {
+        res.send(err);
+      }
+      Intent.update({ query: req.body.query }, { query: req.body.query, response: req.body.response, hits: docs.hits }, { upsert: true },
+          (err, raw) => {
+            if (err) {
+              res.send(err);
+            }
+            res.json({ message: 'Intent updated / created !' });
+          });
+    });
 };
 
 export const getAnswer = (req, res) => {
