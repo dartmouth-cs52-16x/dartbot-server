@@ -8,26 +8,28 @@ This repo contains the code for the API server backend portion of the project.
 ## Architecture
 
 Our code is organized into four main repos: the API backend, the DartBot Tour Guide frontend, the Facebook Messenger bot using botkit, and the iOS companion App.
-The API stores Loc (Location) of sites on the tour with the gps coordinates of the location and the content related to this location.
-The Profile schema (used in our bio page) stores the name and a description of each tour guide.
-
-We will be using mongodb and mongoose to store and access the API.
-TODO:  descriptions of code organization and tools and libraries used
+The API backend stores and updates information for both the Web App and Messenger Bot components.
+Data is stored as 5 main schemas: Bio (Tour Guide Profiles), Intent (Queries), Loc (Location), Survey and User (for signing up and signing in admins).
+We will be using MongoDB and mongoose to store the database and Express to establish routes for accessing the API.
 
 ## Setup
 
+The backend requires the environment variables API_SECRET, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, S3_BUCKET_NAME and  MONGODB_URI.
 
-TODO: how to get the project dev environment up and running, npm install etc
+The backend of the project uses Passport.js to create tokens which requires an API_SECRET environment variable. This can be any established random string.
+
+After setting up Amazon S3 for storage, Amazon provides an access key id and secret access key that need to be set up as their respective environmental variables in this project. In addition, after choosing a name for the S3 bucket, set the S3_BUCKET_NAME as the name.
+
+If using Heroku to deploy the project with the mLab MongoDB add-on, the MONGODB_URI variable will automatically be created. Otherwise the URI should be obtained from MongoDB and added as an environmental variable.
+
 
 ## Deployment
 
-The project is deployed to heroku with the following app instance url:
+This project is currently deployed to Heroku with automatic deployment with a connected GitHub repository on the following app instance url:
 
 `http://dartmouthbot.herokuapp.com/`
 
 ## API Endpoints
-
-# take note of change from `/api/locs/closest` to `/api/data/closest`
 
 Note that all endpoints are prefixed with `/api`, i.e. it is `http://dartmouthbot.herokuapp.com/api/locs` not `http://dartmouthbot.herokuapp.com/locs`
 
@@ -69,7 +71,7 @@ Note that all endpoints are prefixed with `/api`, i.e. it is `http://dartmouthbo
 
 #### Survey feedback
 - **[ ANALYTICS ]** GET `/api/survey`  returns `[ { question: '', meanResponse: '', numResponses: '' }, ...]` array with entries corresponding to the feedback question, the number of responses it's received, and the mean response received. Note that responses are numbers from 1 to 5, hence the mean response rating is also a number in the implied range.
-- **[ FOR BOT ]** PUT `/api/survey` with fields `{ question: '', response: '' }` updates the mean response (/rating) that the question has received. Calculations in creating arriving new mean are unnecessary to repeat here, what must be noted though is that the `question` field must be a String corresponding *exactly* - punction, case, et al - to the question one intends to update the rating of. Finally, it bears repeating that the response should be a number from 1-5 inclusive. 
+- **[ FOR BOT ]** PUT `/api/survey` with fields `{ question: '', response: '' }` updates the mean response (/rating) that the question has received. Calculations in creating arriving new mean are unnecessary to repeat here, what must be noted though is that the `question` field must be a String corresponding *exactly* - punction, case, et al - to the question one intends to update the rating of. Finally, it bears repeating that the response should be a number from 1-5 inclusive.
 - POST `/api/survey` with field `{ question: '' }` creates a survey object in the backend, with `question`'s value corresponding to that of the passed-in field, both numResponses and meanResponse initialized - as one would expect - to 0.
 
 ## Authors
