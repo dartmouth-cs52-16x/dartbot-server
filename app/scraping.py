@@ -31,8 +31,11 @@ def get_daily_data(section_url):
                 "\nSoups:" + dailysoup[2].contents[7] +
                 "\nBurger Special:" + dailysoup[2].contents[10]}
 
+print "hi"
 dailies = get_daily_data(BASE_URL)
+print "scraped"
 client = MongoClient(sys.argv[1])
 db = client.heroku_hbblgh94
 db.ddsdailies.drop()
 result = db.ddsdailies.insert_one(dailies).inserted_id
+print result
