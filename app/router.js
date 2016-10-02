@@ -76,5 +76,6 @@ router.route('/survey')
 router.route('/ddsdailies')
   .post((req, res) => {
     ddsScraping();
+    res.send();
   });
 export default router;

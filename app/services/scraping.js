@@ -6,6 +6,5 @@ export function ddsScraping() {
   };
   PythonShell.run('/app/scraping.py', options, (err, results) => {
     if (err) throw err;
-    console.log('scraped');
   });
 }
