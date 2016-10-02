@@ -6,7 +6,7 @@ import * as User from './controllers/user_controller';
 import * as Intent from './controllers/intent_controller';
 import * as Survey from './controllers/survey_controller';
 import { requireAuth, requireSignin } from './services/passport';
-import { ddsScraping } from 'services/scraping.js';
+import { ddsScraping } from './services/scraping.js';
 
 // init Router
 const router = Router();
