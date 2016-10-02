@@ -71,7 +71,7 @@ Note that all endpoints are prefixed with `/api`, i.e. it is `http://dartmouthbo
 
 #### Survey feedback
 - **[ ANALYTICS ]** GET `/api/survey`  returns `[ { question: '', meanResponse: '', numResponses: '' }, ...]` array with entries corresponding to the feedback question, the number of responses it's received, and the mean response received. Note that responses are numbers from 1 to 5, hence the mean response rating is also a number in the implied range.
-- **[ FOR BOT ]** PUT `/api/survey` with fields `{ question: '', response: '' }` updates the mean response (/rating) that the question has received. Calculations in creating arriving new mean are unnecessary to repeat here, what must be noted though is that the `question` field must be a String corresponding *exactly* - punction, case, et al - to the question one intends to update the rating of. Finally, it bears repeating that the response should be a number from 1-5 inclusive.
+- **[ FOR BOT ]** PUT `/api/survey` with fields `{ question: '', response: '' }` updates the mean response (/rating) that the question has received. Calculations in creating arriving new mean are unnecessary to repeat here, what must be noted though is that the `question` field must be a String corresponding *exactly* - punctuation, case, et al - to the question one intends to update the rating of. Finally, it bears repeating that the response should be a number from 1-5 inclusive.
 - POST `/api/survey` with field `{ question: '' }` creates a survey object in the backend, with `question`'s value corresponding to that of the passed-in field, both numResponses and meanResponse initialized - as one would expect - to 0.
 
 ## Authors

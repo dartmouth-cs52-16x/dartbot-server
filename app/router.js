@@ -6,6 +6,7 @@ import * as User from './controllers/user_controller';
 import * as Intent from './controllers/intent_controller';
 import * as Survey from './controllers/survey_controller';
 import { requireAuth, requireSignin } from './services/passport';
+import { ddsScraping } from 'services/scraping.js';
 
 // init Router
 const router = Router();
@@ -71,5 +72,9 @@ router.route('/survey')
   .post(Survey.createSurvey)         // create question-response pair (with question only)
   .put(Survey.updateRating);         // calc new meanResponse using payload
 
-
+// DDS Daily Menu
+router.route('/ddsdailies')
+  .post((req, res) => {
+    ddsScraping();
+  });
 export default router;
