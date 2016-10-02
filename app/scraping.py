@@ -32,7 +32,7 @@ def get_daily_data(section_url):
                 "\nBurger Special:" + dailysoup[2].contents[10]}
 
 dailies = get_daily_data(BASE_URL)
-client = MongoClient(sys.argv[0])
+client = MongoClient(sys.argv[1])
 db = client.heroku_hbblgh94
 db.ddsdailies.drop()
 result = db.ddsdailies.insert_one(dailies).inserted_id
