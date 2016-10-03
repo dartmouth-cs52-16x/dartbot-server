@@ -11,32 +11,31 @@ def get_daily_data(section_url):
     day = soup.item.title.string
     html = soup.item.description.string
     dailysoup = BeautifulSoup(html, "lxml").find_all('p')
-    if soup.pubDate.find("Sun") != -1:
+    if soup.pubDate.string.find("Sun") != -1:
         return {"day": day,
         "foco": dailysoup[0].contents[0].string,
         "collis": "CLOSED",
-        "hop": "Lunch Special: " + dailysoup[2].contents[1] +
-            "\nDinner Special: " + dailysoup[2].contents[5] +
-            "\nSoups: " + dailysoup[2].contents[8] +
-            "\nBurger Special: " + dailysoup[2].contents[12]}
-    elif soup.pubDate.find("Sat") != -1:
+        "hop": format_specials(dailysoup[2].contents)}
+    elif soup.pubDate.string.find("Sat") != -1:
         return {"day": day,
             "foco": "NONE",
             "collis": "CLOSED",
-            "hop": "Lunch Special: " + dailysoup[0].contents[1] +
-                "\nDinner Special: " + dailysoup[0].contents[5] +
-                "\nSoups: " + dailysoup[0].contents[8] +
-                "\nBurger Special: " + dailysoup[0].contents[12]
-        }
+            "hop": format_specials(dailysoup[0].contents)}
     else:
-         return {"day": day,
-            "foco": dailysoup[0].contents[1],
-            "collis": "Lunch special: " + dailysoup[1].contents[1] +
-                "\n and Soups: " + dailysoup[1].contents[4],
-            "hop": "Lunch Special:" + dailysoup[2].contents[1] +
-                "\nDinner Special:" + dailysoup[2].contents[4] +
-                "\nSoups:" + dailysoup[2].contents[7] +
-                "\nBurger Special:" + dailysoup[2].contents[10]}
+        return {"day": day,
+        "foco": dailysoup[0].contents[1],
+        "collis": format_specials(dailysoup[1].contents),
+        "hop": format_specials(dailysoup[3].contents)}
+
+def format_specials(content):
+    special = ""
+    for x in content:
+        if x.string and x != '':
+            special += x.string
+        else:
+            special += "\n"
+    return special
+
 dailies = get_daily_data(BASE_URL)
 client = MongoClient(sys.argv[1])
 db = client.heroku_hbblgh94
