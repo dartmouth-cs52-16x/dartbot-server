@@ -19,7 +19,7 @@ def get_daily_data(section_url):
             "\nDinner Special: " + dailysoup[2].contents[5] +
             "\nSoups: " + dailysoup[2].contents[8] +
             "\nBurger Special: " + dailysoup[2].contents[12]}
-    else if soup.pubDate.find("Sat") != -1:
+    elif soup.pubDate.find("Sat") != -1:
         return {"day": day,
             "foco": "NONE",
             "collis": "CLOSED",
